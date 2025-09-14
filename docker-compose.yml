@@ -1,0 +1,115 @@
+#### docker-compose
+### Based heavily on searxng/searxng-docker setup | https://github.com/searxng/searxng-docker
+## Original file | https://github.com/searxng/searxng-docker/blob/master/docker-compose.yaml
+
+### Sets up a SearXNG server with Caddy and Redis/Valkey servers for support in Docker containers.
+
+### Three containers are created and communicate with each other through the `searxng-docker` network:
+## 1. A SearXNG server to handle web search capabilities through port `localhost:8080`
+##    - All data is saved in the Docker volume `searxng_data`
+##    - This will be SearXNG specific data like search and session data, user preferences, etc.
+## 2. A Caddy server to act as a reverse proxy for HTTPS handling and domain routing
+##    - Ports directly to machine's IP
+## 3. A Redis/Valkey server for caching search results - Using Valkey through Redis API
+##    - All data will be stored in `valkey-data` volume
+##    - This will be data to be shared between containers (like SearXNG and Caddy)
+##    - This includes data like session IDs and user auth tokens, rate-limiting counters, and search query/results data
+
+### Creating networks
+networks: # This is where all containers can talk to each other
+  searxng-docker:
+
+
+### Creating volumes
+volumes:
+  caddy-data:   # Caddy data
+  caddy-config: # Caddy config
+  valkey-data:  # Valkey data
+  searxng-data: # SearXNG data
+
+
+### Creating containers
+services:
+  caddy: # Caddy container - Reverse proxy with HTTPS support
+    container_name: caddy
+    image: docker.io/library/caddy:2-alpine
+    ## Using host for the network mode ports Caddy directly to local machine's IP
+    network_mode: host        # Uses host network for easier port management
+    restart: unless-stopped   # Restart unless manually stopped (i.e. restart when unhealthy, etc.)
+    volumes:  # All Caddy data stored here
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro   # Custom Caddy configuration
+      - caddy-data:/data:rw                   # Persistent storage for Caddy data
+      - caddy-config:/config:rw               # Persistent storage for Caddy config
+    environment: # See .env file
+      - SEARXNG_HOSTNAME=${SEARXNG_HOSTNAME:-http://localhost}  # Base URL for SearXNG service - Defaults to localhost
+      - SEARXNG_TLS=${LETSENCRYPT_EMAIL:-internal}              # TLS configuration (optional) - Defaults to internal
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"  # Limit log file size
+        max-file: "1"   # Keep only one log file
+    healthcheck:  # Make sure Caddy server is healthy
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+
+  redis: # Redis container - Caching service (using Valkey as a drop-in replacement)
+    container_name: redis
+    image: docker.io/valkey/valkey:8-alpine                 # Valkey is a Redis-compatible fork
+    command: valkey-server --save 30 1 --loglevel warning   # Configuration parameters
+    restart: unless-stopped
+    networks: # Connect to custom network
+      - searxng-docker 
+    volumes:  # All Redis data stored here
+      - valkey-data:/data  # Persistent storage for Redis data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+    healthcheck:  # Make sure Redis server is healthy
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+
+  searxng:  # SearXNG container - The search engine itself
+    container_name: searxng
+    image: docker.io/searxng/searxng:latest
+    restart: unless-stopped
+    networks: # Connect to custom network
+      - searxng-docker    
+    ports:  # Expose search engine on localhost:8080
+      - "127.0.0.1:8080:8080"  
+    volumes:  # All SearXNG data stored here
+      - ./searxng:/etc/searxng:rw           # Mount custom configuration
+      - searxng-data:/var/cache/searxng:rw  # Persistent storage for cache
+    environment:  
+      - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME:-localhost}/  # Base URL for SearXNG service - Defaults to localhost
+      - SEARXNG_SECRET=${SEARXNG_SECRET:-ultrasecretkey}          # Secret key variable (see .env.example) - Defaults to ultrasecretkey
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+    healthcheck:  # Make sure Searxng server is healthy
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+
+
+## Lauren Street: 2025/09/12
+## Modifications compared to original: https://github.com/searxng/searxng-docker/blob/master/docker-compose.yaml
+# 1. Removed deprecated 'version' argument
+# 2. Changed network name and valkey-data volume name
+# 3. Added secret key variable to searxng environment (see .env.example)
+# 4. Added health checks for containers
+# 5. Added lots of comments and attribution
