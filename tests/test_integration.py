@@ -6,15 +6,15 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
-import unittest
 import requests
+from unittest import TestCase
 from langchain_community.utilities import SearxSearchWrapper
 
 # Import modules
 from searxng_utils import SearxngClient, url, query, num_results
 
 
-class TestSearxngClientIntegration(unittest.TestCase):
+class TestSearxngClientIntegration(TestCase):
     """
     Integration tests for SearxngClient against a real Searxng server.
 
@@ -60,7 +60,7 @@ class TestSearxngClientIntegration(unittest.TestCase):
 
         Verifications
         ------------
-            Searxng server is accessible by attempting a request to its url.
+            Searxng server is accessible by attempting a request to its URL.
             If the server is unreachable, this test will be skipped with a descriptive message.
 
         Raises

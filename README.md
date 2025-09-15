@@ -11,7 +11,7 @@
 > TL;DR
 Learn how to use a metasearch engine built on your local machine. Then, you can use this setup as a tool to give to [locally run AI agents][tutorials] 🤖.
 
-This repo demonstrates how to set up a local [SearXNG][searxng] server in [Docker][docker] and get results from the metasearch engine using [LangChain][langchain]. The SearXNG server utilizes a [Caddy][caddy] server for the reverse proxy and a [Valkey][valkey] server (acting through the [Redis][redis] API) for storage. It serves as part of the foundation for building AI agents by giving them the ability to obtain up to date or unfamiliar information. 
+This repo demonstrates how to set up a local [SearXNG][searxng] server in [Docker][docker] and get results from the metasearch engine using [LangChain][langchain]. The SearXNG server utilizes a [Caddy][caddy] server for a reverse proxy and a [Valkey][valkey] server (acting through the [Redis][redis] API) for storage. It serves as part of the foundation for building AI agents by giving them the ability to obtain up to date or unfamiliar information. 
 
 The Docker setup of the SearXNG server with Caddy, Valkey, and Redis is heavily based on SearXNG's [searxng-docker repo][searxng-docker]. See the [license section][license-section] for more details.
 
@@ -46,7 +46,7 @@ Now, let's get building!
     cp .env.example .env
     ```
 
-1.  Generate a new secret key:
+1.  Generate a new secret key (see the README instructions of the [searxng-docker][searxng-docker] repo for similar methods):
 
     <details>
     <summary>Windows</summary>
@@ -96,9 +96,9 @@ Now, let's get building!
 
 ## 📝 Example Use Cases 
 
-After setting everything up, you can now search the web through the SearXNG metasearch engine, rather it be through a [web browser][searxng-url] or through the provided Python methods.
+After setting everything up, you can now search the web through the SearXNG metasearch engine, rather it be through a web browser or through the provided Python methods.
 
-The main class to interact with the metasearch engine is the `SearxngClient` class which is built on the [Requests][requests] and [LangChain][langchain] libraries. Once this class is initialized, you can get search results with the methods `run` (get a summary of all the aggregated results) and `results` (get some number of more detailed results).
+The main class to interact with the metasearch engine is the `SearxngClient` class which is built on the [Requests][requests] and [LangChain][langchain] libraries. Once this class is initialized, you can get search results with `run` (get a summary of all the aggregated results) and `results` (get some number of more detailed results).
 
 > You can also get the full HTML output from the Requests library using the `requests_search` method.
 

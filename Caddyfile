@@ -136,5 +136,5 @@ reverse_proxy localhost:8080
 
 
 ## Lauren Street: 2025/09/12
-## Modifications compared to original: https://github.com/searxng/searxng-docker/blob/master/Caddyfile
+## Modifications compared to original | https://github.com/searxng/searxng-docker/blob/master/Caddyfile
 # 1. Just added lots of comments and attribution

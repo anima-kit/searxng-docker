@@ -8,11 +8,10 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ## For unit testing, we don't want to rely on real Searxng API calls, we just want 
 ## to test the logic of our code
 
-import pytest
-import unittest
-from unittest.mock import patch, MagicMock, Mock
 import requests
 import responses
+from unittest import TestCase
+from unittest.mock import call, patch, MagicMock, Mock
 from langchain_community.utilities import SearxSearchWrapper
 
 # Import modules
@@ -31,7 +30,7 @@ MOCK_SEARCH_RESPONSE = """
 """
 
 ## Now let's test everything
-class TestSearxngClientUnit(unittest.TestCase):
+class TestSearxngClientUnit(TestCase):
     """
     Unit tests for `SearxngClient` class.
     
@@ -161,7 +160,7 @@ class TestSearxngClientUnit(unittest.TestCase):
             self.assertEqual(mock_sleep.call_count, 2)
             
             # Verify sleep was called with the correct argument each time
-            expected_calls = [unittest.mock.call(10), unittest.mock.call(10)]
+            expected_calls = [call(10)] * 2
             mock_sleep.assert_has_calls(expected_calls)
 
             self.assertEqual(client.url, url)
@@ -204,8 +203,7 @@ class TestSearxngClientUnit(unittest.TestCase):
 
             # Verify sleep was called 4 times
             self.assertEqual(mock_sleep.call_count, 4)
-            expected_calls = [unittest.mock.call(10), unittest.mock.call(10),
-                              unittest.mock.call(10), unittest.mock.call(10)]
+            expected_calls = [call(10)] * 4
             mock_sleep.assert_has_calls(expected_calls)
 
         # Ensure SearXNG client wasn't initialized if it failed
