@@ -1,6 +1,6 @@
 ### limiter
-## From searxng/searxng-docker setup --> https://github.com/searxng/searxng-docker
-## Original file --> https://github.com/searxng/searxng-docker/blob/master/searxng/limiter.toml
+## From searxng/searxng-docker setup | https://github.com/searxng/searxng-docker
+## Original file | https://github.com/searxng/searxng-docker/blob/master/searxng/limiter.toml
 
 # This configuration file updates the default configuration file
 # See https://github.com/searxng/searxng/blob/master/searx/limiter.toml
@@ -12,5 +12,5 @@ link_token = false
 
 
 ## Lauren Street 2025/09/12:
-## Modifications compared to the original: https://github.com/searxng/searxng-docker/blob/master/searxng/limiter.toml
+## Modifications compared to the original | https://github.com/searxng/searxng-docker/blob/master/searxng/limiter.toml
 # 1. Just added more comments for attribution

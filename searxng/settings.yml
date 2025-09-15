@@ -26,7 +26,7 @@ search:
 
 
 ## Lauren Street: 2025/09/12
-## Modifications compared to original: https://github.com/searxng/searxng-docker/blob/master/searxng/settings.yml
+## Modifications compared to original | https://github.com/searxng/searxng-docker/blob/master/searxng/settings.yml
 # 1. Moved secret key setup to .env.example file (to be copied to .env file)
 # 2. Added json format for search to work with LangChain's SearxSearchWrapper
 # 3. Added more commments and attribution
