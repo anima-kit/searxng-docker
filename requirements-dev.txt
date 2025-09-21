@@ -4,3 +4,5 @@ types-requests
 pytest
 pytest-order
 responses
+
+coverage

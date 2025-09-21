@@ -1,5 +1,5 @@
 ### tests/test_integration.py
-## Defines integration tests for making sure methods in ./searxng_utils.py can be properly used with SearXNG server
+## Defines integration tests for making sure methods in ./pyfiles/searxng_utils.py can be properly used with SearXNG server
 
 import sys
 import os
@@ -11,14 +11,14 @@ from unittest import TestCase
 from langchain_community.utilities import SearxSearchWrapper
 
 # Import modules
-from searxng_utils import SearxngClient, url, query, num_results
+from pyfiles.searxng_utils import SearxngClient, url, query, num_results
 
 
 class TestSearxngClientIntegration(TestCase):
     """
     Integration tests for SearxngClient against a real Searxng server.
 
-    These tests ensure that the methods in `searxng_utils.py` work correctly when communicating 
+    These tests ensure that the methods in `pyfiles/searxng_utils.py` work correctly when communicating 
     with a running instance of the Searxng server. They verify basic functionality such as:
     
     - Client initialization

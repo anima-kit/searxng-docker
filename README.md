@@ -1,4 +1,6 @@
-# <img src="assets/searxng.svg" alt="Ollama" style="width: 32px; height: 32px; vertical-align: middle;"> <img src="assets/docker.svg" alt="Docker" style="width: 32px; height: 32px; vertical-align: middle;"> <img src="assets/langchain.svg" alt="Python" style="width: 32px; height: 32px; vertical-align: middle;">  SearXNG Docker with LangChain
+![GitHub Workflow Status](https://github.com/anima-kit/searxng-docker/actions/workflows/ci.yml/badge.svg?branch=main) [![codecov](https://codecov.io/gh/anima-kit/searxng-docker/graph/badge.svg)](https://codecov.io/gh/anima-kit/searxng-docker)
+
+# <img src="assets/searxng.svg" alt="SearXNG" style="width: 32px; height: 32px; vertical-align: middle;"> <img src="assets/docker.svg" alt="Docker" style="width: 32px; height: 32px; vertical-align: middle;"> <img src="assets/langchain.svg" alt="LangChain" style="width: 32px; height: 32px; vertical-align: middle;">  SearXNG Docker with LangChain
 
 ![image](assets/searxng-docker-langchain.png)
 
@@ -83,7 +85,7 @@ Now, let's get building!
 1.  Run the test script to ensure the SearXNG server can be reached through the [Requests][requests] and [LangChain][langchain] libraries:
 
     ```bash
-    python searxng_test.py
+    python -m scripts.searxng_test
     ```
 
     <a id="gs-stop"></a>
@@ -110,7 +112,7 @@ For example, to do a web search through a custom script, follow these steps:
 
     ```python
     # Import SearXNGClient class
-    from searxng_utils import SearxngClient
+    from pyfiles.searxng_utils import SearxngClient
 
     # Initialize client
     client = SearxngClient()
@@ -152,15 +154,16 @@ Want to learn how to expand this setup? [Visit my portfolio][animakit] to explor
 
 ```
 ├── Caddyfile               # Caddy reverse proxy configuration
-├── docker-compose.yml      # Docker configurations
-├── logger.py               # Python logger for tracking progress
+├── docker-compose.yml      # Docker configurations          
+├── pyfiles/                # Python source code
+│   └── logger.py           # Python logger for tracking progress
+│   └── searxng_utils.py    # Python methods to use SearXNG server
 ├── requirements.txt        # Required Python libraries for main app
 ├── requirements-dev.txt    # Required Python libraries for development
 ├── searxng/                # SearXNG configuration directory
 │   └── limiter.toml        # Bot protection and rate limiting settings
 │   └── settings.yml        # Further custom SearXNG settings
-├── searxng_test.py         # Python test of methods
-├── searxng_utils.py        # Python methods to use SearXNG server
+├── scripts/                # Example scripts to use Python methods
 ├── tests/                  # Testing suite
 ├── third-party/            # searxng-docker licensing
 └── .env.example            # Custom SearXNG environment variables

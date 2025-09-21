@@ -8,7 +8,7 @@ from langchain_community.utilities import SearxSearchWrapper
 from typing import List
 import pprint
 
-from logger import logger, with_spinner
+from pyfiles.logger import logger, with_spinner
 
 ## Define constants
 # URL | SearXNG server url from Docker setup
