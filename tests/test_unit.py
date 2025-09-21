@@ -1,9 +1,5 @@
 ### tests/test_unit.py
-## Defines unit tests for methods in ./searxng_utils.py
-
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+## Defines unit tests for methods in ./pyfiles/searxng_utils.py
 
 ## For unit testing, we don't want to rely on real Searxng API calls, we just want 
 ## to test the logic of our code
@@ -15,7 +11,7 @@ from unittest.mock import call, patch, MagicMock, Mock
 from langchain_community.utilities import SearxSearchWrapper
 
 # Import modules
-from searxng_utils import SearxngClient, url, query, num_results
+from pyfiles.searxng_utils import SearxngClient, url, query, num_results
 
 # Sample mock HTML response from a SearXNG search result
 MOCK_SEARCH_RESPONSE = """
@@ -35,14 +31,14 @@ class TestSearxngClientUnit(TestCase):
     Unit tests for `SearxngClient` class.
     
     This test suite contains unit tests for the `SearxngClient` class of 
-    `searxng_utils.py`, covering initialization and response handling.
+    `pyfiles.searxng_utils.py`, covering initialization and response handling.
 
     All tests use mocking to isolate the class under test from external dependencies.
     """
 
     ## Test successful client initialization
     @responses.activate
-    @patch('searxng_utils.SearxSearchWrapper')
+    @patch('pyfiles.searxng_utils.SearxSearchWrapper')
     def test_init_client_success(self, mock_client):
         """
         Test successful initialization of SearxngClient with a custom URL.
@@ -120,7 +116,7 @@ class TestSearxngClientUnit(TestCase):
 
     ## Test server errors
     @patch('requests.get')
-    @patch('searxng_utils.SearxSearchWrapper')
+    @patch('pyfiles.searxng_utils.SearxSearchWrapper')
     def test_retry_on_server_error(self, mock_client, mock_get):
         """
         Test handling of SearxngClient initialization when Requests gives server errors.
@@ -153,7 +149,7 @@ class TestSearxngClientUnit(TestCase):
         ]
 
         ## Act and Assert
-        with patch('searxng_utils.time.sleep') as mock_sleep:
+        with patch('pyfiles.searxng_utils.time.sleep') as mock_sleep:
             client = SearxngClient(url=url)
             
             # Verify sleep was called twice
@@ -167,7 +163,7 @@ class TestSearxngClientUnit(TestCase):
             mock_client.assert_called_once_with(searx_host=url)
 
     @patch('requests.get')
-    @patch('searxng_utils.SearxSearchWrapper')
+    @patch('pyfiles.searxng_utils.SearxSearchWrapper')
     def test_retry_on_server_error_then_fail(self, mock_client, mock_get):
         """
         Test handling of SearxngClient initialization when Requests gives server errors then fails.
@@ -197,7 +193,7 @@ class TestSearxngClientUnit(TestCase):
         ] * 5
 
         ## Act & Assert
-        with patch('searxng_utils.time.sleep') as mock_sleep:
+        with patch('pyfiles.searxng_utils.time.sleep') as mock_sleep:
             with self.assertRaises(SystemExit):
                 client = SearxngClient(url=url)
 

@@ -4,8 +4,10 @@
 #   - Initialize SearXNGClient (initialize class and test response with requests)
 #   - Test the run and results methods of LangChain's SearxSearchWrapper
 
-from searxng_utils import SearxngClient
-from logger import logger
+from pyfiles.searxng_utils import SearxngClient
+from pyfiles.logger import logger
+
+logger.info(f'⚙️ Starting SearXNG test in `./scripts/searxng_test.py`')
 
 ## Initialize SearXNG client
 # Defaults to host on url 'http://localhost:8080'
@@ -15,3 +17,5 @@ client = SearxngClient()
 # Default query = 'Python programming' and default num_results=2
 client.run()
 client.results()
+
+logger.info(f'✅ Finished SearXNG test in `./scripts/searxng_test.py` \n\n')

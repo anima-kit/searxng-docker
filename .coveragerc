@@ -1,0 +1,6 @@
+# .coveragerc
+[run]
+source =
+    pyfiles
+omit =
+    pyfiles/__init__.py 
