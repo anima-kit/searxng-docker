@@ -1,11 +1,11 @@
 ![GitHub Workflow Status](https://github.com/anima-kit/searxng-docker/actions/workflows/ci.yml/badge.svg?branch=main) [![codecov](https://codecov.io/gh/anima-kit/searxng-docker/graph/badge.svg)](https://codecov.io/gh/anima-kit/searxng-docker)
 
-# <img src="assets/searxng.svg" alt="SearXNG" style="width: 32px; height: 32px; vertical-align: middle;"> <img src="assets/docker.svg" alt="Docker" style="width: 32px; height: 32px; vertical-align: middle;"> <img src="assets/langchain.svg" alt="LangChain" style="width: 32px; height: 32px; vertical-align: middle;">  SearXNG Docker with LangChain
+# <img src="https://anima-kit.github.io/searxng-docker/assets/searxng.svg" alt="SearXNG" style="width: 32px; height: 32px; vertical-align: middle;"> <img src="https://anima-kit.github.io/searxng-docker/assets/docker.svg" alt="Docker" style="width: 32px; height: 32px; vertical-align: middle;"> <img src="https://anima-kit.github.io/searxng-docker/assets/langchain.svg" alt="LangChain" style="width: 32px; height: 32px; vertical-align: middle;">  SearXNG Docker with LangChain
 
-![image](assets/searxng-docker-langchain.png)
+![image](https://anima-kit.github.io/searxng-docker/assets/searxng-docker-langchain.png)
 
 <p align="center">
-  <img src="assets/searxng-docker-intro.gif" alt="animated" />
+  <img src="https://anima-kit.github.io/searxng-docker/assets/searxng-docker-intro.gif" alt="animated" />
 </p>
 
 ## 🔖 About This Project 
